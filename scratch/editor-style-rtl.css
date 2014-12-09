@@ -1,0 +1,13 @@
+/*
+	Theme Name: Scratch
+
+	Used to style the TinyMCE editor.
+*/
+
+@import url("editor-style.css");
+
+html .mceContentBody{
+	direction: rtl;
+	unicode-bidi: embed;
+	float: right;
+}

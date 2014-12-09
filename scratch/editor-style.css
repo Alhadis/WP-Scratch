@@ -1,0 +1,11 @@
+/*
+	Theme Name: Scratch
+
+	Used to style the TinyMCE editor.
+*/
+
+@import url("src/css/global.css");
+
+html .mce-content-body{
+	
+}
