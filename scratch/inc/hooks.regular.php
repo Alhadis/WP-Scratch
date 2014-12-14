@@ -131,12 +131,12 @@ add_filter('nav_menu_link_attributes', function($attr){
 add_action('wp_head', function(){
 	$custom	=	get_post_custom();
 
-	if(!is_array($custom) || !is_singular()) return null;
+	if(!is_array($custom) || !is_singular()) return NULL;
 
 
 	$cc		=	'#^\s*\[if\s+([^\]]+)\]\s+(.*)$#i';
 
-	$css	=	$custom[META_INCLUDE_CSS];
+	$css	=	@$custom[META_INCLUDE_CSS];
 	if($count = count($css))
 		for($i = 0; $i < $count; ++$i){
 			$paths	=	array_filter(explode("\n", str_replace('THEME_DIR', THEME_DIR, $css[$i])));
@@ -157,7 +157,7 @@ add_action('wp_head', function(){
 		}
 
 
-	$js		=	$custom[META_INCLUDE_JS];
+	$js		=	@$custom[META_INCLUDE_JS];
 	if($count = count($js))
 		for($i = 0; $i < $count; ++$i){
 			$paths	=	array_filter(explode("\n", str_replace('THEME_DIR', THEME_DIR, $js[$i])));
@@ -177,9 +177,9 @@ add_action('wp_head', function(){
 	$custom	=	get_post_custom();
 
 	if(!is_array($custom) || !is_singular())
-		return null;
+		return NULL;
 
-	$css	=	$custom[META_ADDITIONAL_CSS];
+	$css	=	@$custom[META_ADDITIONAL_CSS];
 	if($count = count($css)): ?> 
 <style type="text/css"><?php
 	for($i = 0; $i < $count; ++$i)
@@ -189,7 +189,7 @@ add_action('wp_head', function(){
 	endif;
 	
 	
-	$js	=	$custom[META_ADDITIONAL_JS];
+	$js	=	@$custom[META_ADDITIONAL_JS];
 	if($count = count($js)): ?> 
 <script type="text/javascript"><?php
 	for($i = 0; $i < $count; ++$i)
@@ -201,7 +201,7 @@ add_action('wp_head', function(){
 	
 
 
-	$head	=	$custom[META_ADDITIONAL_HEAD];
+	$head	=	@$custom[META_ADDITIONAL_HEAD];
 	if($count = count($head)) for($i = 0; $i < $count; ++$i)
 		echo PHP_EOL, str_replace('THEME_DIR', THEME_DIR, $head[$i]);
 
@@ -217,7 +217,7 @@ add_action('wp_print_footer_scripts', function(){
 	if(!is_array($custom) || !is_singular())
 		return null;
 
-	$foot	=	$custom[META_ADDITIONAL_FOOT];
+	$foot	=	@$custom[META_ADDITIONAL_FOOT];
 	if($count = count($foot)) for($i = 0; $i < $count; ++$i)
 		echo PHP_EOL, str_replace('THEME_DIR', THEME_DIR, $foot[$i]), PHP_EOL;	
 }, 999);
@@ -273,3 +273,14 @@ if(defined('WPCF7_VERSION')){
 		<?php
 	});
 }
+
+
+
+#	Stop Contact Form 7 from actually sending an e-mail if it's been flagged as silent.
+add_filter('wpcf7_skip_mail', function($send = FALSE, $form = NULL){
+
+	$silent	=	$form->additional_setting('silent');
+	if(count($silent) && intval($silent[0]))
+		return TRUE;
+
+}, 11, 2);

@@ -18,9 +18,10 @@
 
 
 	#	Pointer to the top-most page in the currently-viewed page's ancestry.
-	$top_page		=	wp_top_page();
-	define('TOP_PAGE_TITLE',	$top_page->post_title);
-	define('TOP_PAGE_ID',		$top_page->ID);
+	if($top_page = wp_top_page()){
+		define('TOP_PAGE_TITLE',	$top_page->post_title);
+		define('TOP_PAGE_ID',		$top_page->ID);
+	}
 
 
 

@@ -108,8 +108,8 @@ function add_priority_shortcode($tag, $func, $priority = 10){
 function wp_top_page($id = NULL){
 	global $post;
 	$p		=	empty($id) ? get_page($post) : (is_numeric($id) ? get_page($id) : $id);
+	if(!$p) return NULL;
 	$par	=	$p->post_parent;
-	trace($par);
 	return $par > 0 ? wp_top_page($par) : $p;
 }
 	
