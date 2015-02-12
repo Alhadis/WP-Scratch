@@ -13,6 +13,7 @@
 	require_once('inc/tags.php');
 
 
+	$html_classes	=	array('no-js');
 	$body_classes	=	array();
 	#$mce_plugins	=	new MCEPlugins('sectionbreak');
 

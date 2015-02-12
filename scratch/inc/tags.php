@@ -8,6 +8,29 @@
 
 
 /**
+ * Returns the HTML class attribute for the document's <html> element.
+ * 
+ * Performs a similar role as WordPress's "body_class" function, except
+ * the generated attribute is returned instead of displayed.
+ * 
+ * @uses $html_classes
+ * @param string|array $classes One or more classes to add to the class list.
+ * @return string
+ */
+function html_class($classes = ''){
+	global $html_classes;
+	if(!is_array($html_classes)) return;
+
+	if(!is_array($classes))
+		$classes	=	explode(' ', $classes);
+
+	$attr	=	trim(join(' ', array_unique(array_merge($html_classes, array_map('sanitize_html_class', $classes)))));
+	$output	=	$attr ? ' class="'.$attr.'"' : '';
+	return apply_filters('html_class', $output, $classes);
+}
+
+
+/**
  * Returns an array of breadcrumb objects, each expressed as an associative array with the following properties:
  * 	• name:		Human-readable form of the breadcrumb
  *	• url:		Breadcrumb's permalink

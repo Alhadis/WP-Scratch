@@ -125,6 +125,18 @@ add_filter('nav_menu_link_attributes', function($attr){
 
 
 /**
+ * Includes any extra body classes that were passed into the $body_classes global.
+ * @uses $body_classes
+ */
+add_filter('body_class', function($classes){
+	global $body_classes;
+	if(is_array($body_classes))
+		$classes	=	array_merge($classes, $body_classes);
+	return $classes;
+});
+
+
+/**
  * Enqueues any styles or scripts assigned to this page in its metadata fields, allowing
  * a means of attaching specific stylesheets or scripts to particular pages.
  */

@@ -23,7 +23,7 @@
 	wp_enqueue_script('main',	THEME_DIR . '/src/js/main.js', array('jquery'), NULL, TRUE);
 ?>
 <!DOCTYPE html>
-<html <?php language_attributes(); ?> class="no-js">
+<html <?php language_attributes(); ?><?= html_class(); ?>>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?= CHARSET ?>" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
