@@ -8,6 +8,7 @@
 	require_once('inc/constants.php');
 	require_once('inc/classes/tinymce.php');
 	require_once('inc/classes/walker.php');
+	require_once('inc/classes/cachebuster.php');
 	require_once('inc/widgets/snippet.php');
 	require_once('inc/hooks.php');
 	require_once('inc/tags.php');
