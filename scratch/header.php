@@ -6,7 +6,7 @@
 
 	/** Enqueue Styles */
 	if(USE_MINIFIED)
-		wp_enqueue_style('main',		THEME_DIR . '/src/css/min.css',			NULL, FALSE, 'all');
+		wp_enqueue_style('main',		THEME_DIR . '/src/css/min.css',			NULL, $css_version, 'all');
 
 	else{
 		wp_enqueue_style('fonts',		THEME_DIR . '/src/css/fonts.css',		NULL,				NULL,	'all');
@@ -20,7 +20,7 @@
 
 	/** Enqueue Scripts */
 	wp_upgrade_scripts(JQUERY_VERSION, JQUERY_UI_VERSION, TRUE);
-	wp_enqueue_script('main',	THEME_DIR . '/src/js/main.js', array('jquery'), NULL, TRUE);
+	wp_enqueue_script('main',	THEME_DIR . '/src/js/main.js', array('jquery'), $js_version, TRUE);
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?><?= html_class(); ?>>
