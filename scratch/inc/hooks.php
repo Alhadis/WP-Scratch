@@ -1,9 +1,4 @@
 <?php
-/**
-	* @package WordPress
-	* @subpackage MWSC
-*/
-
 
 require_once('hooks.regular.php');
 require_once('hooks.settings.php');

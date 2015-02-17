@@ -1,8 +1,4 @@
 <?php
-/**
-	* @package WordPress
-	* @subpackage Scratch
-*/
 
 
 #	Define our custom settings.

@@ -1,8 +1,4 @@
 <?php
-/**
-	* @package WordPress
-	* @subpackage Scratch
-*/
 
 	define('JQUERY_VERSION',		'1.11.1');
 	define('JQUERY_UI_VERSION',		'1.11.1');

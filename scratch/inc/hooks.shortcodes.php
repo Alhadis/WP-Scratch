@@ -1,8 +1,4 @@
 <?php
-/**
-	* @package WordPress
-	* @subpackage Scratch
-*/
 
 
 #	Basic shortcode for outputting the site's base URL.

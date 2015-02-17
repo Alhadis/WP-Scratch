@@ -1,10 +1,3 @@
-<?php
-/**
-	* @package WordPress
-	* @subpackage Scratch
-*/
-
-?>
 
 			<div id="comments"><?php
 				echo PHP_EOL;

@@ -1,8 +1,5 @@
 <?php
-/**
- * @package WordPress
- * @subpackage Scratch
-*/
+
 	get_header();
 	
 	if(have_posts()) while(have_posts()) : the_post();

@@ -1,8 +1,5 @@
 <?php
-/**
-	* @package WordPress
-	* @subpackage Scratch
-*/
+
 
 	/** Enqueue Styles */
 	if(USE_MINIFIED)

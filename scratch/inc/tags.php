@@ -1,10 +1,4 @@
 <?php
-/**
-	* @package WordPress
-	* @subpackage Scratch
-*/
-
-
 
 
 /**

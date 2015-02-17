@@ -1,10 +1,7 @@
 <?php
 /**
- * Commonly-used hooks to facilitate general theme development.
- * 
- * @package WordPress
- * @subpackage Scratch
-*/
+ *	Commonly-used hooks to facilitate general theme development.
+ */
 
 
 #	Remove inline styles printed when the gallery shortcode is used.

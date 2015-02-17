@@ -1,9 +1,6 @@
 <?php
 /**
  * Generic Functions for WordPress Development
- *
- * @author John Gardner <gardnerjohng@gmail.com>
- * @version 1.0.2
  */
 
 

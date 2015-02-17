@@ -1,8 +1,4 @@
 <?php
-/**
-	* @package WordPress
-	* @subpackage Scratch
-*/
 
 	require_once('inc/utils.php');
 	require_once('inc/constants.php');
