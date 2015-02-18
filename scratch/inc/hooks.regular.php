@@ -98,11 +98,24 @@ add_filter('posts_where', function($query){
 });
 
 
-#	Allow page/post metadata to override the title displayed to the user.
+#	Admin-only hooks
 if(!is_admin()){
+
+	#	Allow page/post metadata to override the title displayed to the user.
 	add_filter('the_title', function($title, $id){
 		return get_post_meta($id, META_CUSTOM_TITLE, TRUE) ?: $title;
 	}, 11, 2);
+
+
+	#	Hide links to the admin panel for users who aren't logged in.
+	add_filter('wp_get_nav_menu_items', function($items){
+	
+		foreach($items as $key => $value)
+			if('/wp-admin' === $value->url && !is_user_logged_in())
+				unset($items[$key]);
+	
+		return $items;
+	}, 5, 3);
 }
 
 

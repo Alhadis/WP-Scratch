@@ -16,17 +16,3 @@ add_action('admin_head', function(){
 });
 */
 
-
-
-
-if(!is_admin()){
-	#	Hide links to the admin panel for users who aren't logged in.
-	add_filter('wp_get_nav_menu_items', function($items){
-	
-		foreach($items as $key => $value)
-			if('/wp-admin' === $value->url && !is_user_logged_in())
-				unset($items[$key]);
-	
-		return $items;
-	}, 5, 3);
-}
