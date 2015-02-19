@@ -58,6 +58,26 @@ function category_metadata(&$category){
 
 
 
+/**
+ * Wrapper for WordPress's "get_post_custom" function that returns an array
+ * using only the first index of each metadata property it reads.
+ * 
+ * Useful for retrieving a whole mass of metadata properties without needing
+ * to repeatedly pass a zero-index to access the first/only value.
+ * 
+ * @param int $id Post ID, defaults to current post.
+ * @return array
+ */
+function get_flattened_metadata($id = 0){
+	$custom		=	get_post_custom($id);
+	$flattened	=	array();
+	foreach($custom as $key => $value)
+		$flattened[$key]	=	is_array($value) ? $value[0] : $value;
+	return $flattened;
+}
+
+
+
 /*
  * Returns a randomly-generated alphanumeric ID for a DOM element guaranteed to be unique.
  * 
