@@ -12,7 +12,6 @@
 	define('BLOG_URL',				get_bloginfo('url'));
 	define('BLOG_TITLE',			get_bloginfo('title'));
 	define('BLOG_DESCRIPTION',		get_bloginfo('description'));
-	define('BLOG_NEWS_URL',			BLOG_URL . '/' . (PAGE_FOR_POSTS ? get_page_uri(PAGE_FOR_POSTS) : ''));
 	define('META_SEP',				' <span class="meta-sep">|</span> ');
 	define('MCE_PLUGIN_DIR',		'/src/js/mce/tiny_mce/plugins');
 	define('T_DOMAIN',				'scratch');
@@ -20,10 +19,12 @@
 
 	if(PAGE_FOR_POSTS){
 		$news_page		=	get_page($id = PAGE_FOR_POSTS);
+		define('NEWS_PAGE_URL',		BLOG_URL . '/' . get_page_uri(PAGE_FOR_POSTS));
 		define('NEWS_PAGE_TITLE',	apply_filters('get_the_title', $news_page->post_title));
 		define('NEWS_PAGE_CONTENT',	apply_filters('get_the_content', $news_page->post_content));
 	}
 	else{
+		define('NEWS_PAGE_URL',		BLOG_URL . '/');
 		define('NEWS_PAGE_TITLE',	BLOG_TITLE);
 		define('NEWS_PAGE_CONTENT',	'');
 	}
