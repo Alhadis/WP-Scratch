@@ -16,8 +16,7 @@
 
 
 	/** Enqueue Scripts */
-	wp_upgrade_scripts(JQUERY_VERSION, JQUERY_UI_VERSION, TRUE);
-	wp_enqueue_script('main',	THEME_DIR . '/src/js/main.js', array('jquery'), $js_version, TRUE);
+	wp_enqueue_script('main',	THEME_DIR . '/src/js/main.js', NULL, $js_version, TRUE);
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?><?= html_class(); ?>>
