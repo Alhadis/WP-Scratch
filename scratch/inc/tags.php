@@ -142,7 +142,7 @@ function breadcrumbs(){
 	$crumbs	=	get_breadcrumbs();
 ?> 
 		<p class="breadcrumbs" itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">
-			<a itemprop="url" href="<?= BLOG_URL ?>"><span itemprop="title">Home</span></a><?php foreach($crumbs as $crumb): ?> &gt;
+			<a itemprop="url" href="<?= SITE_URL ?>"><span itemprop="title">Home</span></a><?php foreach($crumbs as $crumb): ?> &gt;
 			<a itemprop="url" href="<?= $crumb['url'] ?>"><span itemprop="title"><?= $crumb['name'] ?></span></a><?php endforeach; ?> 
 		</p><?php
 }
@@ -152,17 +152,17 @@ function breadcrumbs(){
 
 /** Returns the text for the page's title tag. */
 function title($separator = ' &bull; '){
-	$news	=	NEWS_PAGE_TITLE ? NEWS_PAGE_TITLE : BLOG_DESCRIPTION;
+	$news	=	NEWS_PAGE_TITLE ? NEWS_PAGE_TITLE : SITE_DESCRIPTION;
 
-	if(IS_MOBILE):				return BLOG_TITLE;
-	elseif(is_single()):		return BLOG_TITLE . $separator . $news . $separator . single_post_title('', FALSE);
-	elseif(is_home()):			return BLOG_TITLE . $separator . $news;
-	elseif(is_front_page()):	return BLOG_TITLE . $separator . single_post_title('', FALSE);
-	elseif(is_page()):	 		return BLOG_TITLE . $separator . single_post_title('', FALSE);
-	elseif(is_archive()):		return BLOG_TITLE . $separator . current(archive_titles());
-	elseif(is_search()):		return BLOG_TITLE . $separator . sprintf(__('Search Results for %s', T_DOMAIN), '"'.get_search_query().'"');
-	elseif(is_404()):			return BLOG_TITLE . $separator . __('Not Found', T_DOMAIN);
-	else:						return BLOG_TITLE;
+	if(IS_MOBILE):				return SITE_TITLE;
+	elseif(is_single()):		return SITE_TITLE . $separator . $news . $separator . single_post_title('', FALSE);
+	elseif(is_home()):			return SITE_TITLE . $separator . $news;
+	elseif(is_front_page()):	return SITE_TITLE . $separator . single_post_title('', FALSE);
+	elseif(is_page()):	 		return SITE_TITLE . $separator . single_post_title('', FALSE);
+	elseif(is_archive()):		return SITE_TITLE . $separator . current(archive_titles());
+	elseif(is_search()):		return SITE_TITLE . $separator . sprintf(__('Search Results for %s', T_DOMAIN), '"'.get_search_query().'"');
+	elseif(is_404()):			return SITE_TITLE . $separator . __('Not Found', T_DOMAIN);
+	else:						return SITE_TITLE;
 	endif;
 
 	return $title;

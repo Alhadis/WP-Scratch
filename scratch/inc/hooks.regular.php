@@ -58,12 +58,12 @@ add_filter('nav_menu_css_class', function($classes, $item, $args){
 		$classes	=	array_merge($classes, $custom_classes);
 
 	#	News page
-	if($item->object_id === PAGE_FOR_POSTS && $post_type === 'post' && (is_single() || is_archive()))
+	if($item->object_id === NEWS_PAGE_ID && $post_type === 'post' && (is_single() || is_archive()))
 		$is_active	=	TRUE;
 
 	#	Check for custom post types.
 	$post_type	=	get_post_type_object($post_type);
-	if(preg_match('#/?'.strtolower($post_type->label).'/?$#i', str_replace(trailingslashit(BLOG_URL), '', $item->url)))
+	if(preg_match('#/?'.strtolower($post_type->label).'/?$#i', str_replace(trailingslashit(SITE_URL), '', $item->url)))
 		$is_active	=	TRUE;
 
 
@@ -128,7 +128,7 @@ if(!is_admin()){
  */
 add_filter('nav_menu_link_attributes', function($attr){
 	if(preg_match('#^/\w#', $attr['href']))
-		$attr['href']	=	untrailingslashit(BLOG_URL) . $attr['href'];
+		$attr['href']	=	untrailingslashit(SITE_URL) . $attr['href'];
 	return $attr;
 }, 5);
 
