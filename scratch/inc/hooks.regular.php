@@ -12,6 +12,10 @@ add_filter('use_default_gallery_style', '__return_false');
 add_filter('excerpt_more', function(){ return ' &hellip;'; });
 
 
+#	Disable those sodding automated update e-mail notifications.
+add_filter('auto_core_update_send_email', '__return_false');
+
+
 #	(Temporary) workaround for TinyMCE's hostility towards Schema.org attributes.
 add_filter('the_content', function($content){
 	return preg_replace('# data-(item(?:id|prop|ref|scope|type))\s*=#', ' $1=', $content);
