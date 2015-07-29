@@ -1,22 +1,22 @@
 <?php
 
+# Enqueue styles
+if(USE_MINIFIED)
+	wp_enqueue_style('main',	THEME_DIR . '/src/min/min.css',		NULL, $css_version);
 
-	/** Enqueue Styles */
-	if(USE_MINIFIED)
-		wp_enqueue_style('main',		THEME_DIR . '/src/min/min.css',		NULL, $css_version, 'all');
+else{
+	wp_enqueue_style('fonts',	THEME_DIR . '/src/css/fonts.css',	NULL,				NULL);
+	wp_enqueue_style('global',	THEME_DIR . '/src/css/global.css',	array('fonts'),		NULL);
+	wp_enqueue_style('main',	THEME_DIR . '/src/css/main.css',	array('global'),	NULL);
+}
 
-	else{
-		wp_enqueue_style('fonts',		THEME_DIR . '/src/css/fonts.css',	NULL,				NULL,	'all');
-		wp_enqueue_style('global',		THEME_DIR . '/src/css/global.css',	array('fonts'),		NULL,	'all');
-		wp_enqueue_style('main',		THEME_DIR . '/src/css/main.css',	array('global'),	NULL,	'all');
-	}
-
-	wp_enqueue_style('ie-lte8',		THEME_DIR . '/src/css/compat/ie.lte-8.css',	array('main'), NULL);
-	wp_style_add_data('ie-lte8',	'conditional', 'lte IE 8');
+wp_enqueue_style('ie-lte8',		THEME_DIR . '/src/css/compat/ie.lte-8.css',	array('main'), NULL);
+wp_style_add_data('ie-lte8',	'conditional', 'lte IE 8');
 
 
-	/** Enqueue Scripts */
-	wp_enqueue_script('main',	THEME_DIR . '/src/js/main.js', NULL, $js_version, TRUE);
+# Enqueue scripts
+wp_enqueue_script('main',	THEME_DIR . '/src/js/main.js', NULL, $js_version, TRUE);
+
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?><?= html_class(); ?>>

@@ -1,8 +1,8 @@
 <?php
 
-require_once('hooks.regular.php');
-require_once('hooks.settings.php');
-require_once('hooks.shortcodes.php');
+require_once 'hooks.regular.php';
+require_once 'hooks.settings.php';
+require_once 'hooks.shortcodes.php';
 
 
 /*
@@ -15,4 +15,3 @@ add_action('admin_head', function(){
 	wp_enqueue_style('admin', THEME_DIR . '/src/css/admin.css');
 });
 */
-

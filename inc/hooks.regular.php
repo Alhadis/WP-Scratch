@@ -1,6 +1,6 @@
 <?php
 /**
- *	Commonly-used hooks to facilitate general theme development.
+ * Commonly-used hooks to facilitate general theme development.
  */
 
 

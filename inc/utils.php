@@ -129,8 +129,8 @@ function wp_top_page($id = NULL){
 	$par	=	$p->post_parent;
 	return $par > 0 ? wp_top_page($par) : $p;
 }
-	
-	
+
+
 /**
  * Returns a month's name by integer.
  *

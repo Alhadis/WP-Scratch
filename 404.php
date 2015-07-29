@@ -1,6 +1,7 @@
 <?php
 
-	get_header();
+get_header();
+
 ?>
 
 		<main role="main"><?php
@@ -22,4 +23,5 @@
 		</main>
 
 <?php
-	get_footer();
+
+get_footer();
