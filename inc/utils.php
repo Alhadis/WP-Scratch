@@ -170,42 +170,6 @@ function wp_image_by_size($id, $size = 'full'){
 
 
 
-/**
- * Reregisters jQuery libraries with the newest versions hosted on Google's CDN.
- *
- * @param string $jquery		jQuery version string
- * @param string $jquery_ui		jQuery UI version string
- * @param bool $in_footer		If TRUE, scripts will be queued to load in the site's footer.
- */
-function wp_upgrade_scripts($jquery, $jquery_ui, $in_footer = TRUE){
-	# return NULL;
-	if(!is_admin()){
-		wp_deregister_script('jquery');
-		wp_register_script('jquery', '//ajax.googleapis.com/ajax/libs/jquery/'.$jquery.'/jquery.min.js', false, NULL, $in_footer);
-	}
-
-	# Upgrade jQuery UI
-	wp_deregister_script('jquery-ui-core');
-	wp_register_script('jquery-ui-core', '//ajax.googleapis.com/ajax/libs/jqueryui/'.$jquery_ui.'/jquery-ui.min.js', array('jquery'), NULL, $in_footer);
-
-	$ui_scripts	=	array(
-		'jquery-ui-tabs',
-		'jquery-ui-sortable',
-		'jquery-ui-draggable',
-		'jquery-ui-droppable',
-		'jquery-ui-selectable',
-		'jquery-ui-resizable',
-		'jquery-ui-dialog'
-	);
-
-	foreach($ui_scripts as $ui_script){
-		wp_deregister_script($ui_script);
-		wp_register_script($ui_script, '', array('jquery-ui-core'), NULL, $in_footer);
-	}	unset($ui_script);
-}
-
-
-
 
 
 

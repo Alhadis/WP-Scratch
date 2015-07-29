@@ -1,7 +1,5 @@
 <?php
 
-	define('JQUERY_VERSION',		'1.11.1');
-	define('JQUERY_UI_VERSION',		'1.11.1');
 	define('IS_MOBILE',				is_mobile());
 	define('IN_DEVELOPMENT',		in_array($_SERVER['SERVER_NAME'], array('localhost', 'theonlinecircle.net.au')));
 	define('USE_MINIFIED',			IN_DEVELOPMENT ? FALSE : get_option('use_minified_assets'));
