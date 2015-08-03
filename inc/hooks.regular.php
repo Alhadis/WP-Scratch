@@ -155,41 +155,45 @@ add_filter('body_class', function($classes){
  * a means of attaching specific stylesheets or scripts to particular pages.
  */
 add_action('wp_head', function(){
-	$custom	=	get_post_custom();
+	global $css_version, $js_version;
 
-	if(!is_array($custom) || !is_singular()) return NULL;
+	# Bail if there's no metadata, or this isn't a WordPress page.
+	if(!is_array($custom = get_post_custom()) || !is_singular()) return NULL;
 
 
-	$cc		=	'#^\s*\[if\s+([^\]]+)\]\s+(.*)$#i';
+	$cc			=	'#^\s*\[if\s+([^\]]+)\]\s+(.*)$#i';
+	$non_word	=	'#[^A-Za-z0-9\-_]+#';
 
-	$css	=	@$custom[META_INCLUDE_CSS];
-	if($count = count($css))
-		for($i = 0; $i < $count; ++$i){
-			$paths	=	array_filter(explode("\n", str_replace('THEME_DIR', THEME_DIR, $css[$i])));
-			foreach($paths as $path){
 
-				if(preg_match($cc, $path, $matches)){
-					$conditional	=	$matches[1];
-					$path			=	$matches[2];
-				}
-				else unset($conditional);
-				
-				$name	=	'add-' . basename($path, '.css');
-				wp_enqueue_style($name, $path);
+	$paths	=	meta_urls(META_INCLUDE_CSS);
+	foreach($paths as $path){
 
-				if($conditional)
-					wp_style_add_data($name, 'conditional', $conditional);
-			}
+		if(preg_match($cc, $path, $matches)){
+			$conditional	=	$matches[1];
+			$path			=	$matches[2];
+		} else unset($conditional);
+
+		$name	=	'add-' . preg_replace($non_word, '-', basename($path, '.css'));
+		wp_enqueue_style($name, $path, NULL, $css_version);
+
+		if($conditional)
+			wp_style_add_data($name, 'conditional', $conditional);
+	}
+
+
+	$paths	=	meta_urls(META_INCLUDE_JS);
+	foreach($paths as $path){
+		$name		=	'add-' . preg_replace($non_word, '-', basename($path, '.js'));
+		$in_footer	=	TRUE;
+
+		# If the line starts with "[in-header]" or "[header]", don't queue the script in the footer.
+		if(preg_match('#^\s*\[(?:in[-_])?header\]\s+(.*)$#i', $path, $matches)){
+			$path		=	$matches[1];
+			$in_footer	=	FALSE;
 		}
 
-
-	$js		=	@$custom[META_INCLUDE_JS];
-	if($count = count($js))
-		for($i = 0; $i < $count; ++$i){
-			$paths	=	array_filter(explode("\n", str_replace('THEME_DIR', THEME_DIR, $js[$i])));
-			foreach($paths as $path)
-				wp_enqueue_script('add-' . basename($path, '.js'), $path);
-		}
+		wp_enqueue_script($name, $path, NULL, $js_version, $in_footer);
+	}
 }, 1);
 
 

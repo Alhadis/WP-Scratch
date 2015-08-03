@@ -26,6 +26,9 @@ else{
 	define('NEWS_PAGE_CONTENT',	'');
 }
 
+#	Asset directories
+define('THEME_CSS_DIR',			THEME_DIR . '/src/' . (USE_MINIFIED ? 'min' : 'css'));
+define('THEME_JS_DIR',			THEME_DIR . '/src/' . (USE_MINIFIED ? 'min' : 'js'));
 
 
 define('META_INCLUDE_CSS',		'include_css');

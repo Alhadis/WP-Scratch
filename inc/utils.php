@@ -16,6 +16,52 @@ function on_ajax($name, $func){
 }
 
 
+/**
+ * Returns a list of URLs from a page's metadata field, with duplicated values removed.
+ *
+ * If there's more than one field value assigned to the post, their values are merged
+ * before being split and filtered. Furthermore, any instances of the following constants
+ * are replaced with their respective values:
+ *
+ *    - SITE_URL
+ *    - THEME_DIR
+ *    - THEME_CSS_DIR
+ *    - THEME_JS_DIR
+ *    - UPLOADS_DIR
+ *
+ * @param string $key - Name of the metadata field
+ * @param int $page_id
+ * @return array
+ */
+function meta_urls($key, $page_id = NULL){
+
+	# Default to current page if not given an ID.
+	$page_id = $id ?: get_the_ID();
+
+
+	# Page has at least one metadata field with this name.
+	if($meta = get_post_meta($page_id, $key)){
+
+		# Merge each background field and strip empty lines and trailing/leading whitespace.
+		$meta	=	preg_replace('#(?:^[\x20\t]+)|(?:\n\s*)(?=\n)|\s+$|\n\n#m', '', join(PHP_EOL, $meta));
+
+
+		# Expand some substrings
+		$str	=	array(
+			'THEME_DIR'		=>	THEME_DIR,
+			'SITE_URL'		=>	SITE_URL,
+			'UPLOADS_DIR'	=>	SITE_URL . '/wp-content/uploads',
+			'THEME_CSS_DIR'	=>	THEME_CSS_DIR,
+			'THEME_JS_DIR'	=>	THEME_JS_DIR
+		);
+		$meta	=	str_replace(array_keys($str), array_values($str), $meta);
+
+		# Split by newline and filter blank/duplicate values
+		$meta	=	array_unique(array_filter(explode(PHP_EOL, $meta)));
+	}
+
+	return $meta ?: array();
+}
 
 
 
