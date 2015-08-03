@@ -402,28 +402,6 @@ function mb_chr($ascii){
 
 
 
-/**
- * Recursively scan a directory. Behaviour otherwise identical to PHP's scandir function.
- * 
- * @param string $path - Directory to scan the contents of.
- * @return array
- */
-function rscandir($path){
-	$output	=	array();
-	foreach(scandir($path) as $file){
-
-		#	Skip the current/parent directory pointers.
-		if($file === '.' || $file === '..') continue;
-
-		$filepath = $path . '/' . $file;
-		if(is_dir($filepath))
-			$output		=	array_merge($output, rscandir($filepath));
-		else $output[]	=	$filepath;
-	}
-	return $output;
-}
-
-
 
 /**
  * Recursively iterates through an array and replaces any scalar values equating to
