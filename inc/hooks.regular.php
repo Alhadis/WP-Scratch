@@ -27,21 +27,18 @@ add_filter('previous_posts_link_attributes',	function(){ return ' class="prev"';
 add_filter('next_posts_link_attributes',		function(){ return ' class="next"';	});
 
 
-#	Don't show both the last page number AND the button linking to the last page.
+#	Tweaks the HTML returned by WP_PageNavi.
 add_filter('wp_pagenavi', function($html){
-	$last	=	'#<a class="last" href="([^"]+)">([^<]+)</a>#i';
+
+	# Replace "previouspostslink" and "nextpostslink" with simply "prev" and "next".
+	$html = preg_replace('~class="(prev|next)(?:ious)?postslink"~', 'class="$1"', $html);
+
+
+	# Don't show both the last page number AND the button linking to the last page.
+	$last = '#<a class="last" href="([^"]+)">([^<]+)</a>#i';
 	if(preg_match($last, $html, $matches) && substr_count($html, $matches[1]) > 1)
 		$html	=	preg_replace($last, '', $html);
 	return $html;
-});
-
-
-#	Tweaks the HTML returned by WP_PageNavi. 
-add_filter('wp_pagenavi', function($input){
-	#$input	=	preg_replace('#(^<div class=\'wp-pagenavi\'>|</div>$)#i', '', $input);
-	$input	=	str_replace('class="previouspostslink"', 'class="prev"', $input);
-	$input	=	str_replace('class="nextpostslink"', 'class="next"', $input);
-	return $input;
 });
 
 
