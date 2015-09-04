@@ -448,6 +448,70 @@ function mb_chr($ascii){
 
 
 
+/**
+ * Adds Word-style fraction autoformatting, and semantic text markup where needed.
+ *
+ * @param string $text - An individual recipe ingredient
+ * @return string
+ */
+function format_ingredient($text){
+	
+	# Replace fraction slashes with regular slashes.
+	$text	=	preg_replace('#(?<=\d)\x{2044}(?=\d)#mui', '/', $text);
+	$fractions	=	array(
+		'0/3'	=>	'↉',
+		'1/10'	=>	'⅒',
+		'1/2'	=>	'½',
+		'1/3'	=>	'⅓',
+		'1/4'	=>	'¼',
+		'1/5'	=>	'⅕',
+		'1/6'	=>	'⅙',
+		'1/7'	=>	'⅐',
+		'1/8'	=>	'⅛',
+		'1/9'	=>	'⅑',
+		'2/3'	=>	'⅔',
+		'2/5'	=>	'⅖',
+		'3/4'	=>	'¾',
+		'3/5'	=>	'⅗',
+		'3/8'	=>	'⅜',
+		'4/5'	=>	'⅘',
+		'5/6'	=>	'⅚',
+		'5/8'	=>	'⅝',
+		'7/8'	=>	'⅞'
+	);
+	
+	# Autoformat vulgar fractions
+	$from	=	array_keys($fractions);
+	$to		=	array_values($fractions);
+	$text	=	str_replace($from, $to, $text);
+
+
+	# Replace consecutive sequences of numbers + weight units with <abbr> tags enclosing the latter.
+	$regex	=	'#(?<=\s|^)([\d' . implode('', $to) . ']+\s*)((?:[km]?gs?|oz|lbs?)\.?)(?=\s|$)#i';
+	$text	=	preg_replace_callback($regex, function($s){
+		list($match, $amount, $unit_abbr)	=	$s;
+
+		$pluralise = intval($amount) !== 1;
+		$unit_names = array(
+			'mg'	=>	'milligram',
+			'g'		=>	'gram',
+			'kg'	=>	'kilogram',
+			'oz'	=>	'ounce',
+			'lb'	=>	'pound',
+			'lbs'	=>	'pound'
+		);
+
+		if(!$unit = $unit_names[preg_replace('#[s\.]+$#', '', strtolower($unit_abbr))])
+			return $match;
+
+		return sprintf('%1$s<abbr title="%2$s%3$s">%4$s</abbr>', $amount, $unit, $pluralise ? 's' : '', $unit_abbr);
+	}, $text);
+
+	return $text;
+}
+
+
+
 
 /**
  * Recursively iterates through an array and replaces any scalar values equating to
