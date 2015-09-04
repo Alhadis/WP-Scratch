@@ -449,7 +449,7 @@ function mb_chr($ascii){
 
 
 /**
- * Adds Word-style fraction autoformatting, and semantic text markup where needed.
+ * Add Word-style fraction autoformatting, and semantic text markup where needed.
  *
  * @param string $text - An individual recipe ingredient
  * @return string
@@ -507,6 +507,8 @@ function format_ingredient($text){
 		return sprintf('%1$s<abbr title="%2$s%3$s">%4$s</abbr>', $amount, $unit, $pluralise ? 's' : '', $unit_abbr);
 	}, $text);
 
+	# Use actual multiplication signs instead of the letter "x" where quantities are being expressed
+	$text	=	preg_replace('#(?<=\s|^)(\d+\s*)x(?=\s)#', '$1&times;', $text);
 	return $text;
 }
 
