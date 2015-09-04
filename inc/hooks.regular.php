@@ -4,30 +4,30 @@
  */
 
 
-#	Remove inline styles printed when the gallery shortcode is used.
+# Remove inline styles printed when the gallery shortcode is used.
 add_filter('use_default_gallery_style', '__return_false');
 
 
-#	Replace the "[...]" automatically appended to generated excerpts with an ellipsis.
+# Replace the "[...]" automatically appended to generated excerpts with an ellipsis.
 add_filter('excerpt_more', function(){ return ' &hellip;'; });
 
 
-#	Disable those sodding automated update e-mail notifications.
+# Disable those sodding automated update e-mail notifications.
 add_filter('auto_core_update_send_email', '__return_false');
 
 
-#	(Temporary) workaround for TinyMCE's hostility towards Schema.org attributes.
+# Crude workaround for TinyMCE's hostility towards Schema.org attributes.
 add_filter('the_content', function($content){
 	return preg_replace('# data-(item(?:id|prop|ref|scope|type))\s*=#', ' $1=', $content);
 }, 1, 1);
 
 
-#	Add class attributes to prev/next pagination links.
+# Add class attributes to prev/next pagination links.
 add_filter('previous_posts_link_attributes',	function(){ return ' class="prev"';	});
 add_filter('next_posts_link_attributes',		function(){ return ' class="next"';	});
 
 
-#	Tweaks the HTML returned by WP_PageNavi.
+# Tweak the HTML returned by WP_PageNavi.
 add_filter('wp_pagenavi', function($html){
 
 	# Replace "previouspostslink" and "nextpostslink" with simply "prev" and "next".
@@ -43,26 +43,26 @@ add_filter('wp_pagenavi', function($html){
 
 
 
-#	Add an extra CSS class to active nav items for brevity's sake.
+# Add an extra CSS class to active nav items for brevity's sake.
 add_filter('nav_menu_css_class', function($classes, $item, $args){
 
 	$is_active	=	$item->current || $item->current_item_ancestor || $item->current_item_parent;
 	$post_type	=	get_post_type();
 
 
-	#	Yeah, ~128 characters worth of redundant HTML classes per element? No thanks.
+	# Yeah, ~128 characters worth of redundant HTML classes per element? No thanks.
 	$classes	=	array();
 
 
-	#	Preserve any custom CSS classes specified in the menu editor.
+	# Preserve any custom CSS classes specified in the menu editor.
 	if(is_array($custom_classes = get_post_meta($item->ID, '_menu_item_classes', TRUE)))
 		$classes	=	array_merge($classes, $custom_classes);
 
-	#	News page
+	# News page
 	if($item->object_id === NEWS_PAGE_ID && $post_type === 'post' && (is_single() || is_archive()))
 		$is_active	=	TRUE;
 
-	#	Check for custom post types.
+	# Check for custom post types.
 	$post_type	=	get_post_type_object($post_type);
 	if(preg_match('#/?'.strtolower($post_type->label).'/?$#i', str_replace(trailingslashit(SITE_URL), '', $item->url)))
 		$is_active	=	TRUE;
@@ -75,7 +75,7 @@ add_filter('nav_menu_css_class', function($classes, $item, $args){
 
 
 
-#	Roll back some redundant/unneeded class/ID attributes that just clutter the DOM and add to bandwidth.
+# Roll back some redundant/unneeded class/ID attributes that just clutter the DOM and add to bandwidth.
 add_filter('nav_menu_item_id',	'__return_empty_string');
 add_filter('page_css_class',	'__return_empty_array');
 add_filter('wp_nav_menu', 'clean_nav_source');
@@ -86,7 +86,7 @@ function clean_nav_source($html){
 
 
 
-#	Exclude certain pages from search results.
+# Exclude certain pages from search results.
 add_filter('posts_where', function($query){
 	global $wpdb;
 
@@ -99,16 +99,16 @@ add_filter('posts_where', function($query){
 });
 
 
-#	Admin-only hooks
+# Admin-only hooks
 if(!is_admin()){
 
-	#	Allow page/post metadata to override the title displayed to the user.
+	# Allow page/post metadata to override the title displayed to the user.
 	add_filter('the_title', function($title, $id){
 		return get_post_meta($id, META_CUSTOM_TITLE, TRUE) ?: $title;
 	}, 11, 2);
 
 
-	#	Hide links to the admin panel for users who aren't logged in.
+	# Hide links to the admin panel for users who aren't logged in.
 	add_filter('wp_get_nav_menu_items', function($items){
 	
 		foreach($items as $key => $value)
@@ -237,7 +237,7 @@ add_action('wp_head', function(){
 
 
 
-#	Output any page-specific footer content.
+# Output any page-specific footer content.
 add_action('wp_print_footer_scripts', function(){
 	$custom	=	get_post_custom();
 
@@ -251,14 +251,14 @@ add_action('wp_print_footer_scripts', function(){
 
 
 
-#	Allow a quicker means of editing the page's Contact Form 7 entry.
+# Allow a quicker means of editing the page's Contact Form 7 entry.
 if(defined('WPCF7_VERSION')){
 
 	add_action('admin_bar_menu', function($menu){
 		global $post, $wpdb, $current_screen;
 
 
-		#	In admin panel: check if we're editing an existing CF7 entry.
+		# In admin panel: check if we're editing an existing CF7 entry.
 		if(is_admin() && @('toplevel_page_wpcf7' === $GLOBALS['current_screen']->id)){
 
 			if($page = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->posts.' WHERE (post_type = \'page\' OR post_type = \'post\') AND post_content LIKE \'%%[contact-form-7 id="%d"%%\'', $_GET['post']))){
@@ -275,11 +275,11 @@ if(defined('WPCF7_VERSION')){
 		}
 
 
-		#	Sanity check: bail if there's no $post global available.
+		# Sanity check: bail if there's no $post global available.
 		if(!$post) return;
 
 
-		#	Post's content contains at least one CF7 shortcode; parse it and grab its ID.
+		# Post's content contains at least one CF7 shortcode; parse it and grab its ID.
 		if(preg_match('#\[contact-form-7[^\]]+id="(\d+)"[^\]]*\]#', $post->post_content, $matches)){
 			$id	=	$matches[1];
 
@@ -293,7 +293,7 @@ if(defined('WPCF7_VERSION')){
 	}, 90);
 
 
-	#	DOM juice for adding icons to inserted admin-bar links.
+	# DOM juice for adding icons to inserted admin-bar links.
 	add_action('wp_after_admin_bar_render', function(){
 		?>
 		<style type="text/css">.ab-icon-email > a::before{content: "\F466"; top: 2px;}.ab-icon-edit > a::before{content:"\F464"; top: 2px;}</style>
@@ -303,7 +303,7 @@ if(defined('WPCF7_VERSION')){
 
 
 
-#	Stop Contact Form 7 from actually sending an e-mail if it's been flagged as silent.
+# Stop Contact Form 7 from actually sending an e-mail if it's been flagged as silent.
 add_filter('wpcf7_skip_mail', function($send = FALSE, $form = NULL){
 
 	$silent	=	$form->additional_setting('silent');

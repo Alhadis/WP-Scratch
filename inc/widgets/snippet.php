@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Widget for outputting a post's content.
  *

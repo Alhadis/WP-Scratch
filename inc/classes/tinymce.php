@@ -89,5 +89,3 @@ class MCEPlugins{
 		return true;
 	}
 }
-
-
