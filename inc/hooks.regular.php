@@ -16,7 +16,7 @@ add_filter('excerpt_more', function(){ return ' &hellip;'; });
 add_filter('auto_core_update_send_email', '__return_false');
 
 
-# Crude workaround for TinyMCE's hostility towards Schema.org attributes.
+# (Temporary) workaround for TinyMCE's hostility towards Schema.org attributes.
 add_filter('the_content', function($content){
 	return preg_replace('# data-(item(?:id|prop|ref|scope|type))\s*=#', ' $1=', $content);
 }, 1, 1);
@@ -27,7 +27,7 @@ add_filter('previous_posts_link_attributes',	function(){ return ' class="prev"';
 add_filter('next_posts_link_attributes',		function(){ return ' class="next"';	});
 
 
-# Tweak the HTML returned by WP_PageNavi.
+# Tweaks the HTML returned by WP_PageNavi.
 add_filter('wp_pagenavi', function($html){
 
 	# Replace "previouspostslink" and "nextpostslink" with simply "prev" and "next".
@@ -46,12 +46,12 @@ add_filter('wp_pagenavi', function($html){
 # Add an extra CSS class to active nav items for brevity's sake.
 add_filter('nav_menu_css_class', function($classes, $item, $args){
 
-	$is_active	=	$item->current || $item->current_item_ancestor || $item->current_item_parent;
-	$post_type	=	get_post_type();
+	$is_active	= $item->current || $item->current_item_ancestor || $item->current_item_parent;
+	$post_type	= get_post_type();
 
 
 	# Yeah, ~128 characters worth of redundant HTML classes per element? No thanks.
-	$classes	=	array();
+	$classes = array();
 
 
 	# Preserve any custom CSS classes specified in the menu editor.
@@ -99,6 +99,7 @@ add_filter('posts_where', function($query){
 });
 
 
+
 # Admin-only hooks
 if(!is_admin()){
 
@@ -118,6 +119,25 @@ if(!is_admin()){
 		return $items;
 	}, 5, 3);
 }
+
+
+
+# Ensure ACF gets listed *under* the CPT UI plugin in the admin menu
+add_filter('custom_menu_order', '__return_true');
+add_filter('menu_order', function($menu){
+	$acf		=	'edit.php?post_type=acf';
+	$cpt		=	'cptui_main_menu';
+	$acf_index	=	array_search($acf, $menu);
+	$cpt_index	=	array_search($cpt, $menu);
+
+	if(FALSE !== $acf_index){
+		unset($menu[$acf_index]);
+		array_splice($menu, $cpt_index, 0, array($acf));
+	}
+	return $menu;
+});
+
+
 
 
 /**
@@ -242,7 +262,7 @@ add_action('wp_print_footer_scripts', function(){
 	$custom	=	get_post_custom();
 
 	if(!is_array($custom) || !is_singular())
-		return null;
+		return NULL;
 
 	$foot	=	@$custom[META_ADDITIONAL_FOOT];
 	if($count = count($foot)) for($i = 0; $i < $count; ++$i)
@@ -263,7 +283,6 @@ if(defined('WPCF7_VERSION')){
 
 			if($page = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->posts.' WHERE (post_type = \'page\' OR post_type = \'post\') AND post_content LIKE \'%%[contact-form-7 id="%d"%%\'', $_GET['post']))){
 				$type	=	get_post_type_object($page->post_type);
-				
 				$menu->add_node(array(
 					'id'	=>	'edit-wpcf7-page',
 					'title'	=>	$type->labels->edit_item,
