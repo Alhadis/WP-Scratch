@@ -12,6 +12,14 @@ add_filter('use_default_gallery_style', '__return_false');
 add_filter('excerpt_more', function(){ return ' &hellip;'; });
 
 
+# If something happened less than a minute ago, don't display "1 minute"
+add_filter('human_time_diff', function($since, $diff, $from, $to){
+	if($diff < MINUTE_IN_SECONDS)
+		$since = sprintf(_n('%s second', '%s seconds', $diff), $diff);
+	return $since;
+}, 99, 4);
+
+
 # Disable those sodding automated update e-mail notifications.
 add_filter('auto_core_update_send_email', '__return_false');
 
