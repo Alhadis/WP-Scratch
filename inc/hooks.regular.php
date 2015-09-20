@@ -20,6 +20,18 @@ add_filter('human_time_diff', function($since, $diff, $from, $to){
 }, 99, 4);
 
 
+# Check if the requesting agent supports WebP
+add_action('init', function(){
+	global $html_classes, $webp_supported;
+
+	# User-Agent supports the WebP format. Yay!
+	if(FALSE !== stripos($_SERVER['HTTP_ACCEPT'], 'image/webp')){
+		$webp_supported = TRUE;
+		$html_classes[] = "webp";
+	}
+});
+
+
 # Disable those sodding automated update e-mail notifications.
 add_filter('auto_core_update_send_email', '__return_false');
 
