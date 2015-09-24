@@ -78,18 +78,24 @@ add_filter('nav_menu_css_class', function($classes, $item, $args){
 	if(is_array($custom_classes = get_post_meta($item->ID, '_menu_item_classes', TRUE)))
 		$classes	=	array_merge($classes, $custom_classes);
 
-	# News page
-	if($item->object_id === NEWS_PAGE_ID && $post_type === 'post' && (is_single() || is_archive()))
-		$is_active	=	TRUE;
 
-	# Check for custom post types.
-	$post_type	=	get_post_type_object($post_type);
-	if(preg_match('#/?'.strtolower($post_type->label).'/?$#i', str_replace(trailingslashit(SITE_URL), '', $item->url)))
-		$is_active	=	TRUE;
+	# Make sure a resource has been successfully loaded
+	if(!is_404()){
+
+		# News page
+		if($item->object_id === NEWS_PAGE_ID && $post_type === 'post' && (is_single() || is_archive()))
+			$is_active	=	TRUE;
+
+		# Check for custom post types.
+		$post_type	=	get_post_type_object($post_type);
+		if(preg_match('#/?'.strtolower($post_type->label).'/?$#i', str_replace(trailingslashit(SITE_URL), '', $item->url)))
+			$is_active	=	TRUE;
+	}
 
 
 	if($is_active)
 		array_push($classes, 'active');
+
 	return $classes;
 }, 99, 3);
 
