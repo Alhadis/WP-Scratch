@@ -356,3 +356,28 @@ add_filter('wpcf7_skip_mail', function($send = FALSE, $form = NULL){
 		return TRUE;
 
 }, 11, 2);
+
+
+
+
+# Check if we're running locally and we're serving the page to somebody over an internal network IP
+$dev_ips	= (array) get_option('developer_ip');
+$host_ip	= $_SERVER['HTTP_HOST'];
+
+if($dev_ips && in_array($host_ip, $dev_ips)){
+	ob_start();
+
+	# Hold WordPress's flusher function until we're finished
+	remove_action('shutdown', 'wp_ob_end_flush_all', 1);
+
+	$dev_url = get_option('developer_url', '%1$s%2$s');
+
+	add_action('shutdown', function() use ($host_ip, $dev_url){
+		$html	= ob_get_contents();
+		ob_end_clean();
+		preg_match('#^\s*https?://#i', SITE_URL, $protocol);
+		echo str_replace(SITE_URL, sprintf($dev_url, array_shift($protocol), $host_ip), $html);
+
+		wp_ob_end_flush_all();
+	});
+}
