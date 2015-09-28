@@ -8,7 +8,7 @@
  */
 class Snippet extends WP_Widget{
 	
-	function Snippet(){
+	function __construct(){
 		$args	=	array(
 			'description'	=>	'Insert content into a sidebar using a Page ID.',
 			'classname'		=>	'snip'
