@@ -10,8 +10,8 @@ else{
 	wp_enqueue_style('main',	THEME_DIR . '/src/css/main.css',	array('global'),	NULL);
 }
 
-wp_enqueue_style('ie-lte8',		THEME_DIR . '/src/css/compat/ie.lte-8.css',	array('main'), NULL);
-wp_style_add_data('ie-lte8',	'conditional', 'lte IE 8');
+wp_enqueue_style('ie-lte9',		THEME_DIR . '/src/css/ie.lte-9.css',	array('main'), NULL);
+wp_style_add_data('ie-lte9',	'conditional', 'lte IE 9');
 
 
 # Enqueue scripts
