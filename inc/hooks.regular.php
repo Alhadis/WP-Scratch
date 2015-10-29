@@ -63,6 +63,19 @@ add_filter('wp_pagenavi', function($html){
 
 
 
+# Remove redundant width/height attributes from <img /> tags
+add_filter('get_image_tag', function($html){
+
+	if(preg_match('#src="([^"]+)"#i', $html, $matches)){
+		list($width, $height) = @getimagesize($matches[1]);
+		return preg_replace("# (width=\"$width\"|height=\"$height\")#i", '', $html);
+	}
+
+	return $html;
+});
+
+
+
 # Add an extra CSS class to active nav items for brevity's sake
 add_filter('nav_menu_css_class', function($classes, $item, $args){
 
