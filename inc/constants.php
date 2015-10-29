@@ -29,19 +29,5 @@ define('THEME_CSS_DIR',         THEME_DIR . '/src/' . (USE_MINIFIED ? 'min' : 'c
 define('THEME_JS_DIR',          THEME_DIR . '/src/' . (USE_MINIFIED ? 'min' : 'js'));
 
 
-# Posts page properties
-if(NEWS_PAGE_ID){
-	$news_page = get_page($id = NEWS_PAGE_ID);
-	$news_url  = get_page_uri(NEWS_PAGE_ID);
-	define('NEWS_PAGE_URL',     SITE_URL . '/' . $news_url);
-	define('NEWS_PAGE_TITLE',   apply_filters('get_the_title',   $news_page->post_title));
-	define('NEWS_PAGE_CONTENT', apply_filters('get_the_content', $news_page->post_content));
-}
-else{
-	define('NEWS_PAGE_URL',     SITE_URL . '/');
-	define('NEWS_PAGE_TITLE',   get_bloginfo('title'));
-	define('NEWS_PAGE_CONTENT', '');
-}
-
 
 # Job-specific
