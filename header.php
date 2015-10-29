@@ -23,12 +23,11 @@ wp_enqueue_script('main',   THEME_DIR . '/src/js/main.js', NULL, $js_version, TR
 <html <?php language_attributes(); ?><?= html_class(); ?>>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php bloginfo('charset'); ?>" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="initial-scale=1, minimum-scale=1, user-scalable=no" />
 
-<!--[if lt IE 9]><script type="text/javascript" src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<!--[if lte IE 9]><script src="<?= THEME_DIR ?>/src/js/ie.lteIE9.js"></script><![endif]-->
 <title><?= title(); ?></title>
-<link rel="profile" href="http://gmpg.org/xfn/11" />
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 
 <?php wp_head(); ?> 

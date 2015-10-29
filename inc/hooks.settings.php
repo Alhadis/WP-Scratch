@@ -1,10 +1,10 @@
 <?php
 
 
-#	Define our custom settings.
+# Define our custom settings
 add_action('admin_init', function(){
 
-	#	Skip Attachments Setting
+	# "Skip Attachments" setting
 	add_settings_field('skip-attach', '<label for="skip_attachments">'.__('Skip Attachment Pages?').'</label>', function(){
 		?> 
 		<input type="checkbox" id="skip_attachments" name="skip_attachments" value="1"<?php checked(get_option('skip_attachments')); ?> />
@@ -17,7 +17,7 @@ add_action('admin_init', function(){
 
 
 
-	#	Setting for removing the injected emoji-detection script and related styling added in WordPress 4.2+
+	# Setting for removing the injected emoji-detection script and related styling added in WordPress 4.2+
 	add_settings_field('disable-emoji', '<label for="disable_emoji">'.__('Disable Emoji').'</label>', function(){
 		?> 
 		<input type="checkbox" id="disable_emoji" name="disable_emoji" value="1"<?php checked(get_option('disable_emoji', TRUE)); ?> />
@@ -31,7 +31,7 @@ add_action('admin_init', function(){
 
 
 
-# Disable WordPress's emoji DOM-juice if settings dictate we'll never need/want it.
+# Disable WordPress's emoji DOM-juice if settings dictate we'll never need/want it
 if(get_option('disable_emoji', TRUE)){
 	remove_action('wp_head', 'print_emoji_detection_script', 7);
 	remove_action('wp_print_styles', 'print_emoji_styles');

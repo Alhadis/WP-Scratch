@@ -5,13 +5,13 @@ get_header();
 ?>
 
 		<main role="main"><?php
-			$page404	=	get_post(get_option(OPTION_404_PAGE));
+			$page404 = get_post(get_option(OPTION_404_PAGE));
 
 			if($page404){ ?> 
 			<h2><?= get_the_title($page404->ID) ?></h2>
-			<?php echo apply_filters('the_content', $page404->post_content); 
+			<?php echo apply_filters('the_content', $page404->post_content);
 			}
-			
+
 			else{
 		?> 
 			<h2>Page not found</h2>

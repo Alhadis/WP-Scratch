@@ -6,7 +6,7 @@ require_once 'hooks.shortcodes.php';
 
 
 # Admin-only hooks
-if(WP_ADMIN){
+if(is_admin()){
 	# wp_enqueue_script('admin', THEME_DIR . '/src/js/admin.js');
 	# wp_enqueue_style('admin', THEME_DIR . '/src/css/admin.css');
 }
