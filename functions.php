@@ -30,6 +30,7 @@ add_action('after_setup_theme', function(){
 	add_editor_style();                         # Enable editor-style.css to style the visual editor
 	add_theme_support('post-thumbnails');       # Enable featured images/post thumbnails
 	add_theme_support('automatic-feed-links');  # Add default posts and comments RSS feed links to head
+	add_theme_support('title-tag');             # Let WordPress manage the page's <title> tag
 	#add_image_size('name', 360, 277);          # Add a custom image size
 
 

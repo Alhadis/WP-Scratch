@@ -20,8 +20,6 @@ define('OPTION_USE_MINIFIED',   'use_minified_assets');
 define('IS_MOBILE',             is_mobile());
 define('NEWS_PAGE_ID',          get_option('page_for_posts'));
 define('SITE_URL',              get_bloginfo('url'));
-define('SITE_TITLE',            get_bloginfo('title'));
-define('SITE_DESCRIPTION',      get_bloginfo('description'));
 define('USE_MINIFIED',          get_option(OPTION_USE_MINIFIED));
 
 
@@ -41,7 +39,7 @@ if(NEWS_PAGE_ID){
 }
 else{
 	define('NEWS_PAGE_URL',     SITE_URL . '/');
-	define('NEWS_PAGE_TITLE',   SITE_TITLE);
+	define('NEWS_PAGE_TITLE',   get_bloginfo('title'));
 	define('NEWS_PAGE_CONTENT', '');
 }
 

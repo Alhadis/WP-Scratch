@@ -27,7 +27,6 @@ wp_enqueue_script('main',   THEME_DIR . '/src/js/main.js', NULL, $js_version, TR
 <meta name="viewport" content="initial-scale=1, minimum-scale=1, user-scalable=no" />
 
 <!--[if lte IE 9]><script src="<?= THEME_DIR ?>/src/js/ie.lteIE9.js"></script><![endif]-->
-<title><?= title(); ?></title>
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 
 <?php wp_head(); ?> 
