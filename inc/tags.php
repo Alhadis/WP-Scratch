@@ -160,8 +160,8 @@ function title($separator = ' &bull; '){
 	elseif(is_front_page()):	return SITE_TITLE . $separator . single_post_title('', FALSE);
 	elseif(is_page()):	 		return SITE_TITLE . $separator . single_post_title('', FALSE);
 	elseif(is_archive()):		return SITE_TITLE . $separator . current(archive_titles());
-	elseif(is_search()):		return SITE_TITLE . $separator . sprintf(__('Search Results for %s', T_DOMAIN), '"'.get_search_query().'"');
-	elseif(is_404()):			return SITE_TITLE . $separator . __('Not Found', T_DOMAIN);
+	elseif(is_search()):		return SITE_TITLE . $separator . sprintf(__('Search Results for %s'), '"'.get_search_query().'"');
+	elseif(is_404()):			return SITE_TITLE . $separator . __('Not Found');
 	else:						return SITE_TITLE;
 	endif;
 
@@ -186,13 +186,13 @@ function archive_titles(){
 			$rewind	=	true;
 		}
 	
-		if(is_day())			$titles	=	array(__('Daily Archives',		T_DOMAIN),	sprintf(__('Showing all posts from %s.', T_DOMAIN), get_the_date()));
-		elseif(is_month())		$titles	=	array(__('Monthly Archives',	T_DOMAIN),	sprintf(__('Showing all posts from %s.', T_DOMAIN), get_the_date('F Y')));
-		elseif(is_year())		$titles	=	array(__('Yearly Archives',		T_DOMAIN),	sprintf(__('Showing all posts from %s.', T_DOMAIN), get_the_date('Y')));
-		elseif(is_category())	$titles	=	array(__('Category Search',		T_DOMAIN),	sprintf(__('Showing all posts filed under "%s".', T_DOMAIN), single_cat_title('', false)));
-		elseif(is_tag())		$titles	=	array(__('Tag Search',			T_DOMAIN),	sprintf(__('Showing all posts tagged with "%s".', T_DOMAIN), single_tag_title('', false)));
-		elseif(is_author())		$titles	=	array(__('Author Search',		T_DOMAIN),	sprintf(__('Showing all posts written by %s.', T_DOMAIN), get_the_author()));
-		else					$titles	=	array(__('Archives',			T_DOMAIN),	'');
+		if(is_day())			$titles	=	array(__('Daily Archives'),    sprintf(__('Showing all posts from %s.'), get_the_date()));
+		elseif(is_month())		$titles	=	array(__('Monthly Archives'),  sprintf(__('Showing all posts from %s.'), get_the_date('F Y')));
+		elseif(is_year())		$titles	=	array(__('Yearly Archives'),   sprintf(__('Showing all posts from %s.'), get_the_date('Y')));
+		elseif(is_category())	$titles	=	array(__('Category Search'),   sprintf(__('Showing all posts filed under "%s".'), single_cat_title('', false)));
+		elseif(is_tag())		$titles	=	array(__('Tag Search'),        sprintf(__('Showing all posts tagged with "%s".'), single_tag_title('', false)));
+		elseif(is_author())		$titles	=	array(__('Author Search'),     sprintf(__('Showing all posts written by %s.'), get_the_author()));
+		else					$titles	=	array(__('Archives'), '');
 	
 		/**	Reset the loop if it was started in head of function. */
 		if($rewind) rewind_posts();
@@ -254,4 +254,3 @@ function pagination(){
 	endif;
 	echo PHP_EOL;
 }
-

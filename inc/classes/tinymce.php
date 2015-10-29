@@ -2,6 +2,8 @@
 
 
 class MCEPlugins{
+	const PLUGIN_DIR = '/src/js/mce/tiny_mce/plugins';
+
 
 	/** @var array List of TinyMCE plugins to load by WordPress */
 	var $plugins	=	array();
@@ -62,7 +64,7 @@ class MCEPlugins{
 	/**	Load TinyMCE plugins : editor_plugin.js (wp2.5) */
 	function load($plugin_array){
 		foreach($this->plugins as $plugin)
-			$plugin_array[$plugin]	=	THEME_DIR . '/' . MCE_PLUGIN_DIR . '/' . $plugin . '/editor_plugin.js';
+			$plugin_array[$plugin]	=	THEME_DIR . '/' . $this::PLUGIN_DIR . '/' . $plugin . '/editor_plugin.js';
 		return $plugin_array;
 	}
 
@@ -85,7 +87,7 @@ class MCEPlugins{
 			return false;
 
 		$this->plugins[]	=	$plugin;
-		@include_once(TEMPLATEPATH . '/' . MCE_PLUGIN_DIR . '/' . $plugin . '/plugin.php');
+		@include_once(TEMPLATEPATH . '/' . $this::PLUGIN_DIR . '/' . $plugin . '/plugin.php');
 		return true;
 	}
 }

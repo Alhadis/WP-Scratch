@@ -13,6 +13,9 @@ $html_classes	=	array('no-js');
 $body_classes	=	array();
 #$mce_plugins	=	new MCEPlugins('sectionbreak');
 
+$css_version	=	get_option(OPTION_CSS_VERSION, NULL);
+$js_version		=	get_option(OPTION_JS_VERSION, NULL);
+
 
 #	Pointer to the top-most page in the currently-viewed page's ancestry.
 if($top_page = wp_top_page()){
@@ -51,7 +54,7 @@ add_action('widgets_init', function(){
 
 	#	Default sidebar
 	register_sidebar(array(
-		'name'			=>	__('Sidebar Name', T_DOMAIN),
+		'name'			=>	__('Sidebar Name'),
 		'id'			=>	'sidebar',
 		'description'	=>	'Descriptive text to be placed here',
 		'before_widget'	=>	'',
@@ -60,7 +63,3 @@ add_action('widgets_init', function(){
 		'after_title'	=>	''
 	));
 });
-
-
-/**	Load theme's text domain 
-load_theme_textdomain(T_DOMAIN, TEMPLATEPATH . '/languages');*/
